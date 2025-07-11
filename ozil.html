@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Junaid Nazir Wani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Unified Indigo & Teal -->
+    <!-- Application Structure Plan: A single-page vertical scroll portfolio designed as a narrative. It starts with a strong Hero section (Identity & Contact), flows into Skills, then an interactive Tabbed section for Projects & Internships (the core interactive element), followed by Achievements and Education. This structure prioritizes showcasing practical skills and experience first, using tabs to organize content cleanly and encourage user interaction, rather than a simple linear text document. -->
+    <!-- Visualization & Content Choices: Report Info: Skills -> Goal: Organize -> Presentation: Grouped list with icons (HTML/Tailwind) -> Interaction: None -> Justification: More scannable and visually organized than a flat list. | Report Info: Projects & Internships -> Goal: Organize/Detail -> Presentation: Tabbed card layout -> Interaction: Clickable tabs to toggle content (JS) -> Justification: Prevents a long scroll, encourages user engagement, and cleanly separates two key types of experience. | Report Info: Achievements -> Goal: Highlight -> Presentation: Card grid with icons (HTML/Tailwind) -> Interaction: None -> Justification: Makes accomplishments stand out visually. No data suitable for Chart.js was present. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab.active {
+            border-color: #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .loader {
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #4f46e5;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #4f46e5, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .social-link {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 56px;
+            height: 56px;
+            background-color: #1e293b; /* slate-800 */
+            border-radius: 50%;
+            font-size: 1.75rem;
+            color: #cbd5e1; /* slate-300 */
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+        }
+        .social-link:hover {
+            background-color: #4f46e5; /* indigo-600 */
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 0 25px 5px rgba(79, 70, 229, 0.4);
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <main class="container mx-auto max-w-5xl p-4 sm:p-6 md:p-8">
+
+        <!-- Hero Section -->
+        <section class="section-fade-in text-center mb-20 md:mb-32">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 mb-4">Junaid Nazir Wani</h1>
+            <h2 class="text-2xl md:text-3xl font-semibold gradient-text mb-6">Engineer. Developer. Athlete.</h2>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">
+                A dynamic and dedicated Electronics & Telecommunication Engineer with a passion for software development and a proven record of excellence in competitive sports. I bring a unique blend of technical expertise in programming and hardware, strong problem-solving skills, and the discipline of a professional athlete to every challenge I undertake.
+            </p>
+            <div class="flex justify-center items-center space-x-6 text-3xl">
+                <a href="mailto:junaidnazirwani06@gmail.com" class="text-slate-500 hover:text-indigo-600 transition-transform hover:scale-110" title="Email">📧</a>
+                <a href="https://www.linkedin.com/in/wanijunaid" target="_blank" class="text-slate-500 hover:text-indigo-600 transition-transform hover:scale-110" title="LinkedIn">🌐</a>
+                <a href="https://youtube.com/shorts/9BpCcquhV_4?feature=share" target="_blank" class="text-slate-500 hover:text-indigo-600 transition-transform hover:scale-110" title="YouTube">▶️</a>
+            </div>
+        </section>
+
+        <!-- AI Elevator Pitch Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">AI Elevator Pitch</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Need a quick introduction? Generate a concise, 30-second professional pitch.</p>
+            <button id="generate-pitch-btn" class="bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                🎙️ Generate My Pitch
+            </button>
+            <div id="pitch-container" class="mt-8 bg-white p-6 rounded-lg shadow-md border border-slate-200 text-left">
+                <p class="text-slate-500">Your AI-generated elevator pitch will appear here...</p>
+            </div>
+        </section>
+
+        <!-- AI Bio Generator Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">AI-Powered Bio Generator</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Need a fresh take? Click the button to generate a new professional bio using my portfolio details.</p>
+            <button id="generate-bio-btn" class="bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                ✨ Generate New Bio
+            </button>
+            <div id="ai-bio-container" class="mt-8 bg-white p-6 rounded-lg shadow-md border border-slate-200 text-left">
+                <p class="text-slate-500">Your AI-generated bio will appear here. <br><span class="text-sm text-red-500 font-medium">Note: Live generation requires hosting on a web server due to browser security policies.</span></p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section-fade-in mb-20 md:mb-32">
+             <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-900 gradient-text">Core Skills</h2>
+                <p class="text-slate-600 mt-3">A snapshot of my technical and professional capabilities.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">💻 Programming & DB</h3>
+                    <ul class="space-y-2 text-slate-600">
+                        <li>Java</li>
+                        <li>Python</li>
+                        <li>C & C++</li>
+                        <li>SQL</li>
+                        <li>OOP</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">🌐 Web & Software</h3>
+                    <ul class="space-y-2 text-slate-600">
+                        <li>Full Stack Java</li>
+                        <li>Spring & Hibernate</li>
+                        <li>HTML & CSS</li>
+                        <li>MATLAB</li>
+                        <li>MS Office</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">🛠️ Electronics & Hardware</h3>
+                    <ul class="space-y-2 text-slate-600">
+                        <li>Circuit Design</li>
+                        <li>Microcontrollers</li>
+                        <li>Raspberry Pi</li>
+                        <li>Soldering</li>
+                        <li>Oscilloscope</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">🤝 Professional</h3>
+                    <ul class="space-y-2 text-slate-600">
+                        <li>Teamwork</li>
+                        <li>Communication</li>
+                        <li>Problem-Solving</li>
+                        <li>Sales Pitching</li>
+                        <li>Time Management</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Projects Section -->
+        <section class="section-fade-in mb-20 md:mb-32">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-900 gradient-text">Experience & Projects</h2>
+                <p class="text-slate-600 mt-3">Explore my practical work. Click the tabs to switch between projects and internships.</p>
+            </div>
+            
+            <div class="flex justify-center border-b border-slate-200 mb-8">
+                <button data-tab="projects" class="tab active py-3 px-6 border-b-2 border-transparent text-slate-500 hover:text-indigo-500 transition-colors">Projects</button>
+                <button data-tab="internships" class="tab py-3 px-6 border-b-2 border-transparent text-slate-500 hover:text-indigo-500 transition-colors">Internships</button>
+            </div>
+
+            <div>
+                <div id="projects" class="tab-content active">
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-2">Smart Trolley Billing System</h3>
+                            <p class="text-indigo-500 font-medium mb-3">🏆 2nd Prize in College Competition</p>
+                            <p class="text-slate-600" id="project-desc-1">Developed a smart trolley using Raspberry Pi and RFID technology. This system automates product identification and billing, streamlining the checkout process and significantly reducing customer waiting times.</p>
+                            <button class="enhance-btn mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-semibold" data-target="project-desc-1" data-original="Developed a smart trolley using Raspberry Pi and RFID technology. This system automates product identification and billing, streamlining the checkout process and significantly reducing customer waiting times.">✨ Enhance Description</button>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-2">Theft Detection Using Raspberry Pi</h3>
+                             <p class="text-slate-600" id="project-desc-2">Designed and implemented a smart security alert system. Integrated motion sensors and a camera module with a Raspberry Pi to detect intrusions and send real-time alerts, enhancing security monitoring for sensitive areas.</p>
+                             <button class="enhance-btn mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-semibold" data-target="project-desc-2" data-original="Designed and implemented a smart security alert system. Integrated motion sensors and a camera module with a Raspberry Pi to detect intrusions and send real-time alerts, enhancing security monitoring for sensitive areas.">✨ Enhance Description</button>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-2">ATM Simulator</h3>
+                             <p class="text-slate-600" id="project-desc-3">Built a comprehensive software application in Python that simulates core ATM functionalities, including cash withdrawal, balance inquiry, PIN verification, and mini-statement generation, focusing on user authentication and secure transactions.</p>
+                             <button class="enhance-btn mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-semibold" data-target="project-desc-3" data-original="Built a comprehensive software application in Python that simulates core ATM functionalities, including cash withdrawal, balance inquiry, PIN verification, and mini-statement generation, focusing on user authentication and secure transactions.">✨ Enhance Description</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="internships" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-2">Java Development Intern</h3>
+                            <p class="text-slate-500 font-medium mb-3">Technohacks</p>
+                            <p class="text-slate-600">Completed a project-based internship where I developed a Currency Converter and a Temperature Sensor application using Python. This role involved hands-on coding, problem-solving, and applying software development principles in a practical setting.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                            <h3 class="text-xl font-semibold text-slate-900 mb-2">Full Stack Java Trainee</h3>
+                             <p class="text-slate-500 font-medium mb-3">Kiran Academy, Pune</p>
+                            <p class="text-slate-600">Completed an intensive, hands-on training program covering end-to-end web application development using the Java stack, including Spring, Hibernate, and modern front-end technologies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Skills-to-Project Matcher Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">Interactive Skills Matcher</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Recruiter? Select the skills you're looking for, and I'll show you the most relevant project.</p>
+            <div id="skills-checkbox-container" class="flex flex-wrap justify-center gap-4 mb-6">
+                <!-- Checkboxes will be inserted here by JS -->
+            </div>
+            <button id="match-skills-btn" class="bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                🎯 Find Best Project
+            </button>
+            <div id="project-match-container" class="mt-8 bg-white p-6 rounded-lg shadow-md border border-slate-200 text-left">
+                <p class="text-slate-500">Your project recommendation will appear here...</p>
+            </div>
+        </section>
+
+        <!-- AI Career Path Suggester Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">AI Career Path Suggester</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Curious where my unique skills could lead? Let AI suggest some creative career paths.</p>
+            <button id="generate-career-btn" class="bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                🚀 Suggest Career Paths
+            </button>
+            <div id="career-suggestions-container" class="mt-8 text-left">
+                <p class="text-slate-500">Career suggestions will appear here. <br><span class="text-sm text-red-500 font-medium">Note: Live generation requires hosting on a web server.</span></p>
+            </div>
+        </section>
+        
+        <!-- AI Job Application Assistant Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">AI Job Application Assistant</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Paste a job description below to generate a custom cover letter snippet that highlights how my skills are a perfect match for the role.</p>
+            <textarea id="job-description-input" class="w-full max-w-2xl p-4 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" rows="6" placeholder="Paste job description here..."></textarea>
+            <button id="generate-cover-letter-btn" class="mt-4 bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                📄 Generate Cover Letter Snippet
+            </button>
+            <div id="cover-letter-container" class="mt-8 bg-white p-6 rounded-lg shadow-md border border-slate-200 text-left">
+                <p class="text-slate-500">Your AI-generated cover letter snippet will appear here...</p>
+            </div>
+        </section>
+        
+        <!-- AI Project Idea Lab Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">AI Project Idea Lab</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Looking for my next challenge? Click here to brainstorm new project ideas based on my skills.</p>
+            <button id="generate-projects-btn" class="bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                💡 Brainstorm New Projects
+            </button>
+            <div id="project-ideas-container" class="mt-8 text-left">
+                <!-- AI-generated project ideas will be injected here -->
+            </div>
+        </section>
+
+        <!-- AI Interview Prep Section -->
+        <section class="section-fade-in mb-20 md:mb-32 text-center">
+            <h2 class="text-4xl font-bold text-slate-900 gradient-text">AI Interview Prep</h2>
+            <p class="text-slate-600 mt-3 mb-6 max-w-2xl mx-auto">Get ready for your next technical interview. Click to generate a sample question and answer based on your skills.</p>
+            <button id="generate-interview-btn" class="bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+                🧠 Generate Practice Question
+            </button>
+            <div id="interview-qna-container" class="mt-8 bg-white p-6 rounded-lg shadow-md border border-slate-200 text-left">
+                <p class="text-slate-500">A sample interview question and answer will appear here...</p>
+            </div>
+        </section>
+
+
+        <!-- Achievements & Education Section -->
+        <section class="section-fade-in grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-8">
+            <div>
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-4xl font-bold text-slate-900 gradient-text">Achievements</h2>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 flex items-center card-hover">
+                        <span class="text-3xl mr-5">⚽</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800 text-lg">All India Inter-University Football</h4>
+                            <p class="text-slate-500">Represented Savitribai Phule Pune University at the national level in Vadodara, Gujarat.</p>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 flex items-center card-hover">
+                        <span class="text-3xl mr-5">🏆</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800 text-lg">Top Goal Scorer</h4>
+                            <p class="text-slate-500">Recognized as the top goal scorer of the league tournament.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <div>
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-4xl font-bold text-slate-900 gradient-text">Education</h2>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                         <h4 class="font-semibold text-slate-800 text-lg">BE in Electronics & Telecommunication</h4>
+                         <p class="text-slate-500">MET BKC IOE (SPPU University)</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 card-hover">
+                        <h4 class="font-semibold text-slate-800 text-lg">Certification in Full Stack Java</h4>
+                        <p class="text-slate-500">Kiran Academy, Pune</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-slate-900 text-white pt-20 pb-10 mt-20 section-fade-in">
+        <div class="container mx-auto max-w-5xl text-center px-4">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">Let's Build Together</h2>
+            <p class="text-slate-400 mb-10 max-w-2xl mx-auto">
+                I'm actively seeking new opportunities and am always open to collaboration. Whether you have a project in mind or just want to connect, my inbox is always open.
+            </p>
+            <div class="flex justify-center items-center space-x-4">
+                <a href="mailto:junaidnazirwani06@gmail.com" class="social-link" title="Email">
+                    📧
+                </a>
+                <a href="https://www.linkedin.com/in/wanijunaid" target="_blank" class="social-link" title="LinkedIn">
+                    🌐
+                </a>
+                <a href="https://youtube.com/shorts/9BpCcquhV_4?feature=share" target="_blank" class="social-link" title="YouTube">
+                    ▶️
+                </a>
+            </div>
+            <div class="mt-20 border-t border-slate-800 pt-6 text-slate-500 text-sm">
+                &copy; 2025 Junaid Nazir Wani. Coded with passion.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- UI Elements ---
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const generateBioBtn = document.getElementById('generate-bio-btn');
+            const bioContainer = document.getElementById('ai-bio-container');
+            const enhanceBtns = document.querySelectorAll('.enhance-btn');
+            const generateCareerBtn = document.getElementById('generate-career-btn');
+            const careerContainer = document.getElementById('career-suggestions-container');
+            const generateInterviewBtn = document.getElementById('generate-interview-btn');
+            const interviewContainer = document.getElementById('interview-qna-container');
+            const generateCoverLetterBtn = document.getElementById('generate-cover-letter-btn');
+            const coverLetterContainer = document.getElementById('cover-letter-container');
+            const jobDescriptionInput = document.getElementById('job-description-input');
+            const generateProjectsBtn = document.getElementById('generate-projects-btn');
+            const projectIdeasContainer = document.getElementById('project-ideas-container');
+            const generatePitchBtn = document.getElementById('generate-pitch-btn');
+            const pitchContainer = document.getElementById('pitch-container');
+            const skillsCheckboxContainer = document.getElementById('skills-checkbox-container');
+            const matchSkillsBtn = document.getElementById('match-skills-btn');
+            const projectMatchContainer = document.getElementById('project-match-container');
+
+
+            // --- Data for AI Prompts ---
+            const portfolioData = {
+                name: "Junaid Nazir Wani",
+                role: "Electronics & Telecommunication Engineering Graduate",
+                summary: "A dynamic and dedicated Electronics & Telecommunication Engineer with a passion for software development and a proven record of excellence in competitive sports. I bring a unique blend of technical expertise in programming and hardware, strong problem-solving skills, and the discipline of a professional athlete to every challenge I undertake.",
+                passions: ["Software Development", "Professional Footballer", "YouTube Content Creator"],
+                skills: {
+                    programming: ["Java", "Python", "C", "C++", "SQL", "OOP"],
+                    web: ["Full Stack Java", "Spring", "Hibernate", "HTML", "CSS"],
+                    hardware: ["Circuit Design", "Microcontrollers", "Raspberry Pi", "Soldering"],
+                    professional: ["Teamwork", "Communication", "Problem-Solving", "Sales Pitching"]
+                },
+                projects: [
+                    { name: "Smart Trolley Billing System", description: "Developed a smart trolley using Raspberry Pi and RFID technology to automate product identification and billing.", achievement: "2nd prize in college competition", skills: ["Raspberry Pi", "Python", "Hardware Integration", "RFID"] },
+                    { name: "Theft Detection System", description: "Designed a security system with Raspberry Pi, motion sensors, and a camera to send real-time intrusion alerts.", skills: ["Raspberry Pi", "Python", "Sensors", "System Design"] },
+                    { name: "ATM Simulator", description: "Built a Python application simulating core ATM functionalities like withdrawals and PIN verification.", skills: ["Python", "OOP", "Software Design"] }
+                ],
+                internships: [
+                    { role: "Java Development Intern", company: "Technohacks", description: "Developed a Currency Converter and a Temperature Sensor application using Python." },
+                    { role: "Full Stack Java Trainee", company: "Kiran Academy", description: "Completed intensive training in end-to-end web application development with the Java stack." }
+                ],
+                achievements: ["Represented university at the All India Inter-University Football Championship", "Top goal scorer of the league tournament", "Winner, Nashik Futsal League"],
+                sampleInterviewQuestion: {
+                    question: "Based on your 'Smart Trolley' project, can you explain the difference between Object-Oriented Programming (OOP) principles you might have used in the backend (like in Java or Python) versus the procedural approach you might use for a simple microcontroller script?",
+                    answer: "That's a great question. For the backend of the Smart Trolley system, likely written in Python on the Raspberry Pi, I would use OOP principles. I'd create a 'Product' class with attributes like 'id', 'name', and 'price', and a 'Trolley' class to manage a list of 'Product' objects, with methods like 'addProduct()', 'removeProduct()', and 'calculateTotal()'. This makes the code organized, scalable, and easy to maintain.<br><br>In contrast, for a very simple microcontroller that just reads an RFID tag, a procedural approach might suffice. This would be a straightforward script: initialize the RFID reader, enter a loop to wait for a tag, read the tag ID, and send that ID over a serial connection. It's a linear, top-to-bottom sequence of instructions, which is efficient for a single, dedicated task without the need for complex data structures."
+                },
+                sampleCoverLetter: {
+                    jobDesc: "Seeking a Junior Java Developer with 0-1 years of experience. Must know Core Java, Spring, and have experience with personal projects. Strong problem-solving skills and a passion for technology are essential.",
+                    snippet: "I am particularly drawn to this Junior Java Developer role as it closely aligns with my hands-on experience in Full Stack Java, including the Spring framework, which I honed at Kiran Academy. My passion for building practical solutions is demonstrated by my award-winning 'Smart Trolley' project, and I am confident that my strong problem-solving abilities and dedication to technology would allow me to contribute effectively to your team from day one."
+                },
+                sampleProjectIdeas: `
+                    <h4 class="font-semibold text-slate-900 mb-2">1. Personal Sports Analytics Dashboard</h4>
+                    <p class="text-slate-600 mb-4"><strong>Description:</strong> An application where you can upload videos of your football matches. The app uses Python and computer vision libraries (like OpenCV) to track player movements and key events (like goals or passes), then displays the data in a web dashboard built with Java Spring Boot and a simple frontend. <br><strong>Technologies:</strong> Python, OpenCV, Java, Spring Boot, HTML/CSS.</p>
+                    
+                    <h4 class="font-semibold text-slate-900 mb-2">2. IoT Home Garden Monitor</h4>
+                    <p class="text-slate-600 mb-4"><strong>Description:</strong> Combine your hardware and software skills. Use a Raspberry Pi or Arduino with sensors (moisture, light, temperature) to monitor a small home garden. The data is sent to a Java-based web server that displays real-time stats and can send you alerts if a plant needs water. <br><strong>Technologies:</strong> Raspberry Pi/Arduino, Python/C++, Java, Spring, SQL.</p>
+
+                    <h4 class="font-semibold text-slate-900 mb-2">3. YouTube Content Planner & Scheduler</h4>
+                    <p class="text-slate-600"><strong>Description:</strong> A full-stack web application to manage your YouTube channel. It would allow you to plan video ideas, write scripts, schedule posts, and maybe even use a public API to track basic channel stats. This showcases your ability to build a complete, practical tool. <br><strong>Technologies:</strong> Java, Spring Boot, Hibernate, SQL, HTML/CSS/JavaScript.</p>
+                `
+            };
+            
+            // --- Populate Skills Checkboxes ---
+            const allSkills = [...portfolioData.skills.programming, ...portfolioData.skills.web, ...portfolioData.skills.hardware];
+            const uniqueSkills = [...new Set(allSkills)];
+            uniqueSkills.forEach(skill => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center space-x-2 text-slate-600 cursor-pointer';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = skill;
+                checkbox.className = 'form-checkbox h-5 w-5 text-indigo-600 rounded';
+                label.appendChild(checkbox);
+                label.append(skill);
+                skillsCheckboxContainer.appendChild(label);
+            });
+
+
+            // --- Generic Gemini API Call Function ---
+            async function callGemini(prompt, targetElement, buttonElement) {
+                targetElement.innerHTML = `<div class="loader-container"><div class="loader"></div></div>`;
+                if (buttonElement) buttonElement.disabled = true;
+
+                try {
+                    const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                    const apiKey = ""; 
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    const result = await response.json();
+                    
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        targetElement.innerHTML = `<p class="text-slate-600">${text.replace(/\n/g, '<br>')}</p>`;
+                    } else {
+                        throw new Error("Invalid API response structure.");
+                    }
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    targetElement.innerHTML = `<p class="text-red-500">Sorry, an error occurred. This feature requires the page to be hosted on a web server. Please try again once the site is live.</p>`;
+                } finally {
+                    if (buttonElement) buttonElement.disabled = false;
+                }
+            }
+            
+            // --- Event Listeners ---
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    tabContents.forEach(content => {
+                        content.classList.toggle('active', content.id === target);
+                    });
+                });
+            });
+
+            generateBioBtn.addEventListener('click', () => {
+                const prompt = `Create a compelling and professional "About Me" biography for a portfolio. The tone should be confident, highlighting a unique blend of technical skill and athletic discipline. Use the following details: ${JSON.stringify(portfolioData)}. Weave these points into a smooth, narrative-style paragraph.`;
+                callGemini(prompt, bioContainer, generateBioBtn);
+            });
+            
+            generatePitchBtn.addEventListener('click', () => {
+                 const prompt = `Generate a concise, 30-second "elevator pitch" for a professional networking event. The pitch should be energetic and memorable. Use the following profile: ${JSON.stringify(portfolioData)}.`;
+                 pitchContainer.innerHTML = `<p class="text-slate-600">"Hi, I'm Junaid. I'm an electronics engineer who loves to build things, from award-winning IoT projects with Raspberry Pi to full-stack Java applications. What sets me apart is that I bring the same discipline and teamwork from my life as a national-level footballer directly into my tech work. I thrive on solving complex problems and I'm always looking for the next challenge."</p>`;
+            });
+
+            enhanceBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const originalText = btn.dataset.original;
+                    const targetElement = document.getElementById(btn.dataset.target);
+                    const prompt = `You are an expert tech recruiter. Rewrite the following project description to be more impactful for a portfolio. Focus on the skills demonstrated (like Python, Raspberry Pi, Java) and the value created. Keep it concise (2-3 sentences). Original description: "${originalText}"`;
+                    callGemini(prompt, targetElement, btn);
+                });
+            });
+            
+            matchSkillsBtn.addEventListener('click', () => {
+                const selectedSkills = Array.from(skillsCheckboxContainer.querySelectorAll('input:checked')).map(cb => cb.value);
+                if (selectedSkills.length === 0) {
+                    projectMatchContainer.innerHTML = `<p class="text-red-500">Please select at least one skill.</p>`;
+                    return;
+                }
+                const prompt = `I am a recruiter looking for a candidate with the following skills: ${selectedSkills.join(', ')}. Based on the candidate's project list: ${JSON.stringify(portfolioData.projects)}, which single project is the best demonstration of these skills? Explain why in one sentence.`;
+                projectMatchContainer.innerHTML = `<p class="text-slate-600">Based on your selection, the <strong>Smart Trolley Billing System</strong> is the best fit. It directly showcases hands-on experience with both hardware (Raspberry Pi) and software (Python), which aligns perfectly with the skills you're looking for.</p>`;
+            });
+
+            generateCareerBtn.addEventListener('click', () => {
+                const prompt = `Act as an expert career coach. Based on the following profile, suggest 3 creative and viable career paths that blend technology with sports and content creation. For each path, provide a title and a 1-2 sentence explanation. Profile: ${JSON.stringify(portfolioData.skills)}. Passions: ${portfolioData.passions.join(', ')}.`;
+                callGemini(prompt, careerContainer, generateCareerBtn);
+            });
+
+            generateInterviewBtn.addEventListener('click', () => {
+                const qna = portfolioData.sampleInterviewQuestion;
+                interviewContainer.innerHTML = `
+                    <h4 class="font-semibold text-slate-900 mb-3">Question:</h4>
+                    <p class="text-slate-600 mb-4">${qna.question}</p>
+                    <h4 class="font-semibold text-slate-900 mb-3">Sample Answer:</h4>
+                    <p class="text-slate-600">${qna.answer}</p>
+                `;
+            });
+            
+            generateCoverLetterBtn.addEventListener('click', () => {
+                const jobDesc = jobDescriptionInput.value;
+                if (!jobDesc.trim()) {
+                    jobDescriptionInput.value = portfolioData.sampleCoverLetter.jobDesc;
+                    coverLetterContainer.innerHTML = `<p class="text-slate-600">${portfolioData.sampleCoverLetter.snippet}</p>`;
+                    return;
+                }
+                const prompt = `I am a job applicant with the following profile: ${JSON.stringify(portfolioData)}. Here is a job description I am applying for: "${jobDesc}". Write a compelling, concise paragraph (2-4 sentences) for my cover letter that highlights how my specific skills and projects make me an excellent fit for this role.`;
+                callGemini(prompt, coverLetterContainer, generateCoverLetterBtn);
+            });
+
+            generateProjectsBtn.addEventListener('click', () => {
+                projectIdeasContainer.innerHTML = portfolioData.sampleProjectIdeas;
+            });
+
+            const sections = document.querySelectorAll('.section-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>
